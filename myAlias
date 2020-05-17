@@ -1,0 +1,2 @@
+## -- JLU 12/05/2020
+alias ls='ls -lsh --color=auto'
