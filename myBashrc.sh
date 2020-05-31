@@ -116,6 +116,7 @@ fi
 export TERM="screen-256color" 
 
 if [ -f `which powerline-daemon` ]; then  
+	XDG_CONFIG_DIRS=$HOME/.config/powerline/
 	powerline-daemon -q  
 	POWERLINE_BASH_CONTINUATION=1  
 	POWERLINE_BASH_SELECT=1  
@@ -128,3 +129,46 @@ fi
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
         source /etc/profile.d/vte.sh
 fi
+
+# -- JLU 29/05/2020 iniciar QtCreator para compilar para los equipos de Matrix (poky 1.7)
+startQt() {
+	bash /opt/Qt/Tools/QtCreator/bin/qtcreator-poky1.7.sh &>> /dev/null &
+}
+
+# -- JLU 31/05/2020 crea nueva nota
+newNote() {
+	local rawTitle=$1  ## String del titulo que se pasa entre comillas dobles a la función
+
+	# Constantes
+	local PATH_TO_NOTES=$HOME/Dropbox/ExBrain/
+	local HEADER_TEMPLATE=$HOME/Dropbox/ExBrain/template-note.md
+	local FILE_EXTENSION='.md'
+	# Variables 
+	local timeStamp=$(date '+%Y%m%d%H%M')
+	local fileName=$PATH_TO_NOTES$timeStamp"-"${rawTitle// /-}$FILE_EXTENSION
+
+	cp ${HEADER_TEMPLATE} $fileName
+	local month=$(date +%B)
+	sed -i -e "s/{myTitle}/$rawTitle/g" $fileName
+	sed -i -e "s/{Month}/${month^}/g" $fileName
+	sed -i -e "s/{Day}/$(date +%d)/g" $fileName
+	sed -i -e "s/{year}/$(date +%Y)/g" $fileName
+
+	nvim $fileName
+}
+
+# -- JLU 31/05/2020 crea una nueva entrada en el diario
+newDay() {
+	local PATH_TO_JOURNAL=$HOME/Dropbox/ExBrain/diario/
+	local JOURNAL_TEMPLATE=$HOME/Dropbox/ExBrain/diario/diario-plantilla.md
+	local timeStamp=$(date '+%Y%m%d%H%M')
+	local fileName=$PATH_TO_JOURNAL$timeStamp"-diario.md"
+	local month=$(date +%B)
+	title="# $(date +%d) ${month^} $(date +%Y)"
+	cp $JOURNAL_TEMPLATE $fileName
+	sed -i -e "s/{myTitle}/$title/g" $fileName
+
+	nvim $fileName
+}
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
