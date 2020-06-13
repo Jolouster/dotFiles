@@ -174,4 +174,7 @@ newDay() {
 # -- JLU 01/06/2020 modo vim
 set -o vi
 
+# -- JLU 13/06/2020 ruta a mis notas personales
+export NOTES_DIR=$HOME/Dropbox/ExBrain
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
