@@ -5,6 +5,30 @@
 # @todo: install plugins of nvim
 # @todo: instalar brave-browser
 # @todo: instalar fzf
+# @todo: instalar minicom
+
+## ----------------------------------------------------
+## Configuración de MINICOM 
+## ----------------------------------------------------
+## La configuración se establece desde el propio programa.
+##
+## Config. puerto serie:
+## /dev/ttyUSB0   115200 8N1
+## Terminal settings:
+##   A - Terinal emulation: ANSI
+##   B - Backspace key sends: BS
+## Configure Minicom:
+##   Configuración de la puerta serial
+##      F - Control de Flujo por Hardware: No
+##      G - Control de Flujo por Software: No
+##   El resto como esté.
+## 
+## Colores cómodos para el menú de navegación letras cian y fondo azul
+## Barra de estado: letras blancas y fondo rojo
+## Importante habilitar el color para que en la línea de comandos
+## se puedan visualizar los colores y el resaltado de sintaxis.
+## ----------------------------------------------------
+
 
 
 ## ----------------------------------------------------
