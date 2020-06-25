@@ -64,6 +64,17 @@ set viewoptions=folds,localoptions,unix,slash,cursor
 autocmd BufWritePre *.php mkview 
 autocmd BufWritePost *.php loadview
 
+" Go to index of notes and set working directory to my notes
+nnoremap <leader>ni :e $NOTES_DIR/index.md<CR>:cd $NOTES_DIR<CR>
+
+"Make :grep use ripgrep (you need install before ripgrep in your system)
+if executable('rg')
+	set grepprg=rg\ --vimgrep
+endif
+" Command to search in our notes and only our notes
+command! -nargs=1 Ngrep grep "<args>" -g "*.md" $NOTES_DIR
+nnoremap <leader>ns :Ngrep
+
 " ----------------------------------------------------------------------------------------
 "  Plugins configuration
 " ----------------------------------------------------------------------------------------
@@ -119,6 +130,20 @@ let g:fzf_action = {
 	\ 'ctrl-s': 'split',
 	\ 'ctrl-v': 'vsplit'
 	\}
+
+" Función para usar FZF en la creación de links dentro de archivos markdown
+function! MakeMarkdownLink(file)
+    "let filename = fnameescape(fnamemodify(a:file, ":t"))
+    "why only the tail ?  I believe the whole filename must be linked unless everything is flat ...
+    let filename = fnameescape(a:file)
+    let filename_clean = fnamemodify(fnameescape(fnamemodify(a:file, ":t:r:s/^[0-9]*-//")), ":gs/-/ /")
+     " Insert the markdown link to the file in the current buffer
+    let mdlink = "[".filename_clean."](".filename.")"
+    put=mdlink
+endfunction
+
+command! -nargs=1 MakeMarkdownLink :call MakeMarkdownLink(<f-args>)
+nnoremap <c-l> :call fzf#run({'sink': 'MakeMarkdownLink'})<CR>
 
 " COC
 " ----------------------------------------------------------------------------------------
