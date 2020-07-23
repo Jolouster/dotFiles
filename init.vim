@@ -145,6 +145,24 @@ endfunction
 command! -nargs=1 MakeMarkdownLink :call MakeMarkdownLink(<f-args>)
 nnoremap <c-l> :call fzf#run({'sink': 'MakeMarkdownLink'})<CR>
 
+" Crear nuevas notas personales partiendo de una plantilla
+" ----------------------------------------------------------------------------------------
+function! MakeNewNote(title)
+	let title = trim(a:title)
+	let filenameTitle = fnamemodify(title, ":gs/ /-/")
+	let dateTimeStr =  strftime("%Y%m%d%H%M")
+	let fileName =$NOTES_DIR."/".dateTimeStr."-".filenameTitle.".md"
+	echo fileName
+	execute 'vsplit' fileName
+	let template = $NOTES_DIR."/template-note.md"
+	execute 'read' template
+	silent execute '%s/{myTitle}/'.title.'/g'
+	silent execute '%s/{Month}/'.strftime("%b").'/g'
+	silent execute '%s/{Day}/'.strftime("%d").'/g'
+	silent execute '%s/{year}/'.strftime("%Y").'/g'
+	setf markdown
+endfunction
+
 " COC
 " ----------------------------------------------------------------------------------------
 " see more information about coc-clangd
