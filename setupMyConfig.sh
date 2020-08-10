@@ -41,6 +41,10 @@
 # La configuración global se encuentra en /usr/local/lib/pythonXX/dist-packages/powerline/config_files/ que 
 # hay que copiar al directorio del usuario. Mejor no tocar la configuración global.
 
+## ----------------------------------------------------
+## Restaurar las tareas programadas
+## ----------------------------------------------------
+crontab ~/dotFiles/cron-backup.txt
 
 
 ## ----------------------------------------------------
