@@ -48,6 +48,8 @@ hi CursorLine term=bold cterm=bold guibg=Grey40
 set spelllang=en,es_es
 set cindent shiftwidth=4
 set backup
+set writebackup
+set backupdir=~/Temp/backupFiles/
 set mouse=a
 set splitright
 set splitbelow

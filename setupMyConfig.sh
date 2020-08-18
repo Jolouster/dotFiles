@@ -46,6 +46,10 @@
 ## ----------------------------------------------------
 crontab ~/dotFiles/cron-backup.txt
 
+## ----------------------------------------------------
+## Crea el directorio donde se generan los backups automáticos de los archivos que se editan
+## ----------------------------------------------------
+mkdir -p ~/Temp/backupFiles
 
 ## ----------------------------------------------------
 ## Enlazado de los archivos de configuración 
