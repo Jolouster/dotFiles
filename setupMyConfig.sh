@@ -6,6 +6,9 @@
 # @todo: instalar brave-browser
 # @todo: instalar fzf
 # @todo: instalar minicom
+# @todo: instalar zenity
+# @todo: instalar smbclient
+#    sudo apt install smbclient -y
 
 ## ----------------------------------------------------
 ## Configuración de MINICOM 
@@ -59,3 +62,11 @@ ln -sfv ~/dotFiles/myAlias.sh $HOME/.bash_aliases
 ln -sfv ~/dotFiles/gitConfig $HOME/.gitconfig
 ln -sfv ~/dotFiles/myProfile $HOME/.profile
 ln -sfv ~/dotFiles/init.vim $HOME/.config/nvim/init.vim
+
+
+## ----------------------------------------------------
+## Configuración de las extensiones del plugin COC para vim
+## ----------------------------------------------------
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+vim -c 'CocInstall -sync coc-json coc-html coc-css coc-sql coc-cmake coc-clangd|q'
+

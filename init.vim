@@ -1,5 +1,5 @@
 " Configuration by Jonathan López
-" Date: Mayo 2020
+" Date: Septiembre 2020
 " ----------------------------------------------------------------------------------------
 " Plugin's section
 " ----------------------------------------------------------------------------------------
@@ -8,25 +8,25 @@ call plug#begin('~/.local/share/nvim/plugged')
 	" Generic plugins
 	Plug 'joshdick/onedark.vim' " Theme very cool
 	Plug 'vim-airline/vim-airline'	" Theme for powerline in vim
-	Plug 'vim-airline/vim-airline-themes'
-	Plug 'scrooloose/nerdtree'
-	Plug 'Townk/vim-autoclose' " Cierra automáticamente las llaves, paréntesis y corchetes
-	Plug 'ryanoasis/vim-devicons' " Add icons to user interface
-	Plug 'tpope/vim-fugitive' " Para usar git desde neovim
-	Plug 'tpope/vim-surround' " The plugin provides mappings to easily delete, change and add such surroundings in pairs
-	Plug 'tpope/vim-commentary' " Work with comments
-	" Autocomplete based in 'Language Server Protocol (LSP)'
-	Plug 'neoclide/coc.nvim', {'branch': 'release'} " Use release branch (Recommend)
-	Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'} " Or latest tag
-	Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'} " Or build from source code by use yarn: https://yarnpkg.com
-	" Convert files 
-	Plug 'vim-pandoc/vim-pandoc' " Integración con Pandoc
-	Plug 'vim-pandoc/vim-pandoc-syntax' " Pilla mejor la 'versión' de markdown que usa Pandoc
-	" Work with PHP files
-	Plug 'stephpy/vim-php-cs-fixer'	" Format the php file 
-	" Improve search
-	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() }}
-	" Plug 'junegunn/fzf.vim'
+  	Plug 'vim-airline/vim-airline-themes'
+  	Plug 'Townk/vim-autoclose' " Cierra automáticamente las llaves, paréntesis y corchetes
+  	Plug 'ryanoasis/vim-devicons' " Add icons to user interface
+  	Plug 'tpope/vim-fugitive' " Para usar git desde neovim
+  	Plug 'tpope/vim-surround' " The plugin provides mappings to easily delete, change and add such surroundings in pairs
+  	Plug 'tpope/vim-commentary' " Work with comments
+  	" Autocomplete based in 'Language Server Protocol (LSP)'
+  	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+  	Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+  	" Convert files 
+  	Plug 'vim-pandoc/vim-pandoc' " Integración con Pandoc
+  	Plug 'vim-pandoc/vim-pandoc-syntax' " Pilla mejor la 'versión' de markdown que usa Pandoc
+  	" Work with PHP files
+  	Plug 'stephpy/vim-php-cs-fixer'	" Format the php file 
+  	" Improve search
+  	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() }}
+  	Plug 'junegunn/fzf.vim'
+	Plug 'airblade/vim-rooter'
 call plug#end()
 
 " ----------------------------------------------------------------------------------------
@@ -65,22 +65,35 @@ set foldlevel=1			" All folds with N times a 'shiftwidth' indent or more will be
 set viewoptions=folds,localoptions,unix,slash,cursor
 autocmd BufWritePre *.php mkview 
 autocmd BufWritePost *.php loadview
-
-" Go to index of notes and set working directory to my notes
-nnoremap <leader>ni :e $NOTES_DIR/index.md<CR>:cd $NOTES_DIR<CR>
+ 
+" Move among onpened files
+nnoremap <S-Tab> :bn<CR>
+" Move among splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+" Move among tabs
+nnoremap <C-Left> :tabn<CR>
+nnoremap <C-Right> :tabp<CR>
 
 "Make :grep use ripgrep (you need install before ripgrep in your system)
 if executable('rg')
 	set grepprg=rg\ --vimgrep
 endif
-" Command to search in our notes and only our notes
-command! -nargs=1 Ngrep grep "<args>" -g "*.md" $NOTES_DIR
-nnoremap <leader>ns :Ngrep
+
+" Configuración del explorador de archivos netrw
+let g:loaded_netrw = 1 " Evita que se abra automaticamente al abrir un directorio
+let g:netrw_liststyle = 3 " mustra los archivos en forma de árbol
+" Seleccionamos qué ejecutables de python usar. Hay varios en el sistema.
+let g:python_host_prog = '/bin/python2'
+let g:python3_host_prog = '/bin/python3'
 
 " ----------------------------------------------------------------------------------------
-"  Plugins configuration
+" ################################ Plugins configuration ################################
 " ----------------------------------------------------------------------------------------
 
+" ----------------------------------------------------------------------------------------
 " Airline
 " ----------------------------------------------------------------------------------------
 let g:airline#extensions#tabline#enabled = 1	" Enable extension of vim-airline for tabs
@@ -89,23 +102,29 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme='violet'
 let g:airline#extensions#branch#enabled = 1 " Habilita integración de Fugitive con Airline.
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#buffer_idx_mode = 1 " show buffer name in tabline.
 
+" move among buffers 
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
+
+" ----------------------------------------------------------------------------------------
 " Configuration for vim-pandoc-syntax
 " ----------------------------------------------------------------------------------------
 let g:pandoc#syntax#conceal#use = 0
 let g:pandoc#syntax#conceal#urls = 1
 let g:pandoc#folding#level=2 " Todos las secciones con un encabezado inferior al 2 (1 el mayor) se contraen
 
-" Configuration for NERDTree
 " ----------------------------------------------------------------------------------------
-" 	-> Open NERDTree when vim starts up on directory
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-"	-> Map a specific key to open NERDTree (F2)
-map <F2> :NERDTreeToggle<CR>
-"	-> Close vim if NERDTree is the only window left open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
 " PHP cs-fixer
 " ----------------------------------------------------------------------------------------
 " If you use php-cs-fixer version 2.x
@@ -120,18 +139,95 @@ let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run op
 let g:php_cs_fixer_verbose = 0                    " Return the output of command if 1, else an inline information.
 autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 
+" ----------------------------------------------------------------------------------------
 " FZF
 " ----------------------------------------------------------------------------------------
+
 nnoremap <C-p> :FZF<CR>
 " Ctrl+t open file in a new tab
-" Ctrl+s open file below (split view)
+" Ctrl+x open file below (split view)
 " Ctrl+v open file to the side (vertical split)
 " Enter to open it in the current selected panel
+" This is the default extra key bindings
 let g:fzf_action = {
-	\ 'ctrl-t': 'tab split',
-	\ 'ctrl-s': 'split',
-	\ 'ctrl-v': 'vsplit'
-	\}
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Enable per-command history.
+" CTRL-N and CTRL-P will be automatically bound to next-history and
+" previous-history instead of down and up. If you don't like the change,
+" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+map <C-f> :Files<CR>
+map <leader>b :Buffers<CR>
+nnoremap <leader>g :Rg<CR>
+nnoremap <leader>t :Tags<CR>
+nnoremap <leader>m :Marks<CR>
+
+
+let g:fzf_tags_command = 'ctags -R'
+" Border color
+" let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' } }
+ 
+let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
+let $FZF_DEFAULT_COMMAND="rg --files --hidden"
+
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" "Get Files
+" command! -bang -nargs=? -complete=dir Files
+"   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+" 
+" 
+" Get text in files with Rg
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+" Ripgrep advanced
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+
+" Git grep
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)<Paste>
+
+" ----------------------------------------------------------------------------------------
+"  GESTIÓN Y MANEJO DE NOTAS
+" ----------------------------------------------------------------------------------------
+"
+" Go to index of notes and set working directory to my notes
+nnoremap <leader>ni :e $NOTES_DIR/index.md<CR>:cd $NOTES_DIR<CR>
+" Command to search in our notes and only our notes
+command! -nargs=1 Ngrep grep "<args>" -g "*.md" $NOTES_DIR
+nnoremap <leader>ns :Ngrep
 
 " Función para usar FZF en la creación de links dentro de archivos markdown
 function! MakeMarkdownLink(file)
@@ -145,12 +241,11 @@ function! MakeMarkdownLink(file)
 endfunction
 
 command! -nargs=1 MakeMarkdownLink :call MakeMarkdownLink(<f-args>)
-nnoremap <c-l> :call fzf#run({'sink': 'MakeMarkdownLink'})<CR>
+nnoremap <c-m> :call fzf#run({'sink': 'MakeMarkdownLink'})<CR>
 
 " Crear nuevas notas personales partiendo de una plantilla
-" ----------------------------------------------------------------------------------------
-function! MakeNewNote(title)
-	let title = trim(a:title)
+function! MakeNewNote(...)
+	let title = trim(join(a:000, ' '))
 	let filenameTitle = fnamemodify(title, ":gs/ /-/")
 	let dateTimeStr =  strftime("%Y%m%d%H%M")
 	let fileName =$NOTES_DIR."/".dateTimeStr."-".filenameTitle.".md"
@@ -165,6 +260,8 @@ function! MakeNewNote(title)
 	setf markdown
 endfunction
 
+command! -nargs=* NewNote call MakeNewNote(<f-args>)
+" ----------------------------------------------------------------------------------------
 " COC
 " ----------------------------------------------------------------------------------------
 " see more information about coc-clangd
@@ -182,7 +279,7 @@ inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><C-S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -223,7 +320,6 @@ function! OpenTerminal()
 endfunction
 " Open a terminal with Ctrl + n in a horizontal split below
 nnoremap <c-n> :call OpenTerminal()<CR>
-
 
 
 
