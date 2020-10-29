@@ -177,4 +177,7 @@ set -o vi
 # -- JLU 13/06/2020 ruta a mis notas personales
 export NOTES_DIR=$HOME/Dropbox/ExBrain
 
+# -- JLU 29/10/20202 ruta a los scripts personales
+PATH=$PATH:$HOME/Scripts
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
