@@ -1,14 +1,16 @@
 #!/bin/bash
 
-# @todo: instalar neovim
-#     sudo apt install neovim
+#@ Author: Jonathan López <jolouster@gmail.com>
+#@ Description: Script para la puesta a punto de un sistema linux tipo Debian
+#@ Note: Ejecutar con sudo o como root
+
+apt install neovim -y
 # @todo: install plugins of nvim
 # @todo: instalar brave-browser
 # @todo: instalar fzf
 # @todo: instalar minicom
 # @todo: instalar zenity
-# @todo: instalar smbclient
-#    sudo apt install smbclient -y
+apt install smbclient -y  ## Necesario para transferir archivos desde equipos windows por Samba
 
 ## ----------------------------------------------------
 ## Configuración de MINICOM 

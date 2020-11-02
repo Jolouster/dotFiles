@@ -41,6 +41,7 @@ set noexpandtab			" no convierte tabulaciones en espacios
 set autoindent			" habilita el autoindentado en archivos de código
 set smartindent
 set encoding=utf-8		" establece la codificación por defecto
+set termencoding=utf-8	" codificación de la terminal
 set wildmenu
 color onedark
 set cursorline
@@ -66,7 +67,7 @@ set viewoptions=folds,localoptions,unix,slash,cursor
 autocmd BufWritePre *.php mkview 
 autocmd BufWritePost *.php loadview
  
-" Move among onpened files
+" Move among onpened files in buffers
 nnoremap <S-Tab> :bn<CR>
 " Move among splits
 nnoremap <C-J> <C-W><C-J>
