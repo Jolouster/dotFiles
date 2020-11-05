@@ -4,13 +4,24 @@
 #@ Description: Script para la puesta a punto de un sistema linux tipo Debian
 #@ Note: Ejecutar con sudo o como root
 
-apt install neovim -y
+# apt install neovim -y
+# apt install vifm -y
 # @todo: install plugins of nvim
 # @todo: instalar brave-browser
 # @todo: instalar fzf
 # @todo: instalar minicom
 # @todo: instalar zenity
-apt install smbclient -y  ## Necesario para transferir archivos desde equipos windows por Samba
+# apt install smbclient -y  ## Necesario para transferir archivos desde equipos windows por Samba
+
+
+## ----------------------------------------------------
+## Configuración de VIFM
+## ----------------------------------------------------
+mkdir -p $HOME/.vifm/colors/
+ln -sfv ~/dotFiles/vifmColors/onedark.vifm $HOME/.vifm/colors/
+ln -sfv ~/dotFiles/vifmColors/palenight.vifm $HOME/.vifm/colors/
+ln -sfv ~/dotFiles/vifmColors/solarized-dark.vifm $HOME/.vifm/colors/
+ln -sfv ~/dotFiles/vifmColors/zenburn.vifm $HOME/.vifm/colors/
 
 ## ----------------------------------------------------
 ## Configuración de MINICOM 
@@ -33,8 +44,6 @@ apt install smbclient -y  ## Necesario para transferir archivos desde equipos wi
 ## Importante habilitar el color para que en la línea de comandos
 ## se puedan visualizar los colores y el resaltado de sintaxis.
 ## ----------------------------------------------------
-
-
 
 ## ----------------------------------------------------
 ## Powerline
@@ -64,6 +73,7 @@ ln -sfv ~/dotFiles/myAlias.sh $HOME/.bash_aliases
 ln -sfv ~/dotFiles/gitConfig $HOME/.gitconfig
 ln -sfv ~/dotFiles/myProfile $HOME/.profile
 ln -sfv ~/dotFiles/init.vim $HOME/.config/nvim/init.vim
+ln -sfv ~/dotFiles/vifmrc $HOME/.vifm/
 
 
 ## ----------------------------------------------------
