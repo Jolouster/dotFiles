@@ -52,6 +52,7 @@ set backup
 set writebackup
 set backupdir=~/Temp/backupFiles/
 set mouse=a
+set autowrite
 set splitright
 set splitbelow
 set foldmethod=indent	" Create folds for every sequence of lines with the same indent.
@@ -240,7 +241,7 @@ function! MakeMarkdownLink(file)
     let mdlink = "[".filename_clean."](".filename.")"
     put=mdlink
 endfunction
-
+ 
 command! -nargs=1 MakeMarkdownLink :call MakeMarkdownLink(<f-args>)
 nnoremap <c-m> :call fzf#run({'sink': 'MakeMarkdownLink'})<CR>
 
@@ -268,7 +269,12 @@ command! -nargs=* NewNote call MakeNewNote(<f-args>)
 " see more information about coc-clangd
 " see more information about coc-cmake
 " see more information about coc-phpls
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-phpls', 'coc-cmake', 'coc-clangd', 'coc-marketplace', 'coc-tsserver', 'coc-sql', 'coc-sh', 'coc-css', 'coc-html']
 let g:coc_disable_startup_warning = 1
+let g:coc_config_home = '~/dotFiles/'
+let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#coc#error_symbol = 'Err:'
+let g:airline#extensions#coc#warning_symbol = 'Warn:'
 " Recomended configurations in coc.nvim webpage in Github
 set updatetime=300
 set signcolumn=yes

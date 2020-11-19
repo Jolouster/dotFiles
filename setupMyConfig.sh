@@ -18,10 +18,16 @@
 ## Configuración de VIFM
 ## ----------------------------------------------------
 mkdir -p $HOME/.vifm/colors/
-ln -sfv ~/dotFiles/vifmColors/onedark.vifm $HOME/.vifm/colors/
-ln -sfv ~/dotFiles/vifmColors/palenight.vifm $HOME/.vifm/colors/
-ln -sfv ~/dotFiles/vifmColors/solarized-dark.vifm $HOME/.vifm/colors/
-ln -sfv ~/dotFiles/vifmColors/zenburn.vifm $HOME/.vifm/colors/
+
+for file in ~/dotFiles/vifmColors/*
+do
+	ln -sfv $file $HOME/.vifm/colors/
+done
+
+# ln -sfv ~/dotFiles/vifmColors/onedark.vifm $HOME/.vifm/colors/
+# ln -sfv ~/dotFiles/vifmColors/palenight.vifm $HOME/.vifm/colors/
+# ln -sfv ~/dotFiles/vifmColors/solarized-dark.vifm $HOME/.vifm/colors/
+# ln -sfv ~/dotFiles/vifmColors/zenburn.vifm $HOME/.vifm/colors/
 
 ## ----------------------------------------------------
 ## Configuración de MINICOM 
@@ -79,6 +85,6 @@ ln -sfv ~/dotFiles/vifmrc $HOME/.vifm/
 ## ----------------------------------------------------
 ## Configuración de las extensiones del plugin COC para vim
 ## ----------------------------------------------------
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-vim -c 'CocInstall -sync coc-json coc-html coc-css coc-sql coc-cmake coc-clangd|q'
+# sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+# vim -c 'CocInstall -sync coc-json coc-html coc-css coc-sql coc-cmake coc-clangd|q'
 

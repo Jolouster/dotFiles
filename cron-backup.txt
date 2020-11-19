@@ -23,4 +23,4 @@
 # m h  dom mon dow   command
 
 # JLU - 2020-08-10 
-@reboot /home/jlopez/Scripts/pegasoBackupInOneDrive.sh; echo "crontab at "date('+%F %R') >> /home/jlopez/cronJob.txt
+@reboot /home/jlopez/Scripts/pegasoBackupInOneDrive.sh
