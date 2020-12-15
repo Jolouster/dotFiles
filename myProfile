@@ -35,3 +35,10 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+
+# JLU 29-11-2020
+# set PATH so it include my Scripts if it exists
+if [ -d "$HOME/Scripts" ]
+then
+	PATH="$HOME/Scripts:$PATH"
+fi

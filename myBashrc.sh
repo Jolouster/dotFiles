@@ -132,7 +132,7 @@ fi
 
 # -- JLU 29/05/2020 iniciar QtCreator para compilar para los equipos de Matrix (poky 1.7)
 startQt() {
-	bash /opt/Qt/Tools/QtCreator/bin/qtcreator-poky1.7.sh &>> /dev/null &
+	bash ${HOME}/Proyectos/Qt/Tools/QtCreator/bin/qtcreator-poky1.7.sh &>> /dev/null &
 }
 
 # -- JLU 31/05/2020 crea nueva nota

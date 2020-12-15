@@ -11,28 +11,31 @@ call plug#begin('~/.local/share/nvim/plugged')
   	Plug 'vim-airline/vim-airline-themes'
   	Plug 'Townk/vim-autoclose' " Cierra automáticamente las llaves, paréntesis y corchetes
   	Plug 'ryanoasis/vim-devicons' " Add icons to user interface
-  	Plug 'tpope/vim-fugitive' " Para usar git desde neovim
   	Plug 'tpope/vim-surround' " The plugin provides mappings to easily delete, change and add such surroundings in pairs
   	Plug 'tpope/vim-commentary' " Work with comments
   	" Autocomplete based in 'Language Server Protocol (LSP)'
   	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
-  	Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
   	" Convert files 
   	Plug 'vim-pandoc/vim-pandoc' " Integración con Pandoc
   	Plug 'vim-pandoc/vim-pandoc-syntax' " Pilla mejor la 'versión' de markdown que usa Pandoc
   	" Work with PHP files
-  	Plug 'stephpy/vim-php-cs-fixer'	" Format the php file 
+    Plug 'stephpy/vim-php-cs-fixer'	" Format the php file 
   	" Improve search
   	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() }}
   	Plug 'junegunn/fzf.vim'
 	Plug 'airblade/vim-rooter'
+	" Depuración dentro de vim 
+	" Plug 'puremourning/vimspector'
+	" Highlight for C/C++
+    Plug 'jackguo380/vim-lsp-cxx-highlight'
+    Plug 'vim-syntastic/syntastic'
+	Plug 'rhysd/vim-clang-format'
 call plug#end()
 
 " ----------------------------------------------------------------------------------------
 "  Configurations
 " ----------------------------------------------------------------------------------------
-syntax on
+syntax enable
 set number			    " muestra los número de línea
 set relativenumber		" muestra las líneas relativas a la que estamos -Mola un huevete!-
 set shiftwidth=4		" espacios para el autoindentado
@@ -43,7 +46,6 @@ set smartindent
 set encoding=utf-8		" establece la codificación por defecto
 set termencoding=utf-8	" codificación de la terminal
 set wildmenu
-color onedark
 set cursorline
 hi CursorLine term=bold cterm=bold guibg=Grey40
 set spelllang=en,es_es
@@ -67,6 +69,14 @@ set foldlevel=1			" All folds with N times a 'shiftwidth' indent or more will be
 set viewoptions=folds,localoptions,unix,slash,cursor
 autocmd BufWritePre *.php mkview 
 autocmd BufWritePost *.php loadview
+
+" ----------------------------------------------------------------------------------------
+" Configuracion del tema de colores
+" ----------------------------------------------------------------------------------------
+colorscheme onedark
+let g:onedark_hide_endofbuffer = 1
+let g:onedark_terminal_italics = 1
+" ----------------------------------------------------------------------------------------
  
 " Move among onpened files in buffers
 nnoremap <S-Tab> :bn<CR>
@@ -85,8 +95,10 @@ if executable('rg')
 endif
 
 " Configuración del explorador de archivos netrw
-let g:loaded_netrw = 1 " Evita que se abra automaticamente al abrir un directorio
+let g:loaded_netrw = 1 " avoid autoload 
 let g:netrw_liststyle = 3 " mustra los archivos en forma de árbol
+let g:netrw_preview = 1
+let g:netrw_alto = 1
 " Seleccionamos qué ejecutables de python usar. Hay varios en el sistema.
 let g:python_host_prog = '/bin/python2'
 let g:python3_host_prog = '/bin/python3'
@@ -103,8 +115,9 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='violet'
 let g:airline#extensions#branch#enabled = 1 " Habilita integración de Fugitive con Airline.
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#buffer_idx_mode = 1 " show buffer name in tabline.
+let g:airline_section_x = 'Bf:%{bufnr("%")}'
 
 " move among buffers 
 nmap <leader>1 <Plug>AirlineSelectTab1
@@ -145,7 +158,7 @@ autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 " FZF
 " ----------------------------------------------------------------------------------------
 
-nnoremap <C-p> :FZF<CR>
+"  // original, ahora es C-f (ver linea 183) nnoremap <C-p> :FZF<CR>
 " Ctrl+t open file in a new tab
 " Ctrl+x open file below (split view)
 " Ctrl+v open file to the side (vertical split)
@@ -168,14 +181,10 @@ nnoremap <leader>g :Rg<CR>
 nnoremap <leader>t :Tags<CR>
 nnoremap <leader>m :Marks<CR>
 
-
 let g:fzf_tags_command = 'ctags -R'
-" Border color
-" let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' } }
  
 let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
 let $FZF_DEFAULT_COMMAND="rg --files --hidden"
-
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
@@ -193,11 +202,6 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" "Get Files
-" command! -bang -nargs=? -complete=dir Files
-"   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
-" 
-" 
 " Get text in files with Rg
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
@@ -263,13 +267,15 @@ function! MakeNewNote(...)
 endfunction
 
 command! -nargs=* NewNote call MakeNewNote(<f-args>)
+
 " ----------------------------------------------------------------------------------------
 " COC
 " ----------------------------------------------------------------------------------------
 " see more information about coc-clangd
 " see more information about coc-cmake
 " see more information about coc-phpls
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-phpls', 'coc-cmake', 'coc-clangd', 'coc-marketplace', 'coc-tsserver', 'coc-sql', 'coc-sh', 'coc-css', 'coc-html']
+let g:coc_node_path = '/usr/local/bin/node'
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-phpls', 'coc-cmake', 'coc-clangd', 'coc-marketplace', 'coc-tsserver', 'coc-sql', 'coc-sh', 'coc-css', 'coc-html', 'coc-ccls']
 let g:coc_disable_startup_warning = 1
 let g:coc_config_home = '~/dotFiles/'
 let g:airline#extensions#coc#enabled = 1
@@ -283,9 +289,9 @@ set shortmess+=c
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
 inoremap <expr><C-S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -311,9 +317,46 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
 
 " ----------------------------------------------------------------------------------------
 "  Terminal configuration
@@ -328,5 +371,58 @@ endfunction
 " Open a terminal with Ctrl + n in a horizontal split below
 nnoremap <c-n> :call OpenTerminal()<CR>
 
+" ----------------------------------------------------------------------------------------
+"  CMake
+" ----------------------------------------------------------------------------------------
 
+
+
+" ----------------------------------------------------------------------------------------
+"  C/C++ syntax highlight
+" ----------------------------------------------------------------------------------------
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:syntastic_cpp_checkers = ['cpplint']
+let g:syntastic_c_checkers = ['cpplint']
+let g:syntastic_cpp_cpplint_exec = 'cpplint'
+" The following two lines are optional. Configure it to your liking!
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:clang_format#code_style = 'chromium'
+let g:clang_format#command = '/usr/bin/clang-format-7'
+let g:clang_format#detect_style_format = 1
+let g:clang_format#auto_format_on_insert_leave = 1
+let g:clang_format#style_options = {
+		\ 'BasedOnStyle': 'Chromium',
+		\ 'AlignAfterOpenBracket': 'Align',
+		\ 'AlignEscapedNewlines': 'Left',
+		\ 'AlignOperands': 'true',
+		\ 'AlignTrailingComments': 'true',
+		\ 'AllowAllArgumentsOnNextLine': 'true',
+		\ 'AllowAllParametersOfDeclarationOnNextLine': 'true',
+		\ 'AllowShortBlocksOnASingleLine': 'true',
+		\ 'AllowShortFunctionsOnASingleLine': 'InlineOnly',
+		\ 'AllowShortIfStatementsOnASingleLine': 'WithoutElse',
+		\ 'AllowShortLoopsOnASingleLine': 'false',
+		\ 'AlwaysBreakTemplateDeclarations': 'Yes',
+		\ 'ColumnLimit': 100,
+		\ 'CompactNamespaces': 'false',
+		\ 'IndentWidth': 4,
+		\ 'Language': 'Cpp',
+		\ 'NamespaceIndentation': 'All',
+		\ 'SpaceAfterCStyleCast': 'true',
+		\ 'SpaceAfterLogicalNot': 'false',
+		\ 'SpaceAfterTemplateKeyword': 'true',
+		\ 'SpaceBeforeAssignmentOperators': 'true',
+		\ 'SpaceBeforeParens': 'Always',
+		\ 'SpaceBeforeRangeBasedForLoopColon': 'true',
+		\ 'SpaceInEmptyParentheses': 'false',
+		\ 'SpacesBeforeTrailingComments': 3,
+		\ 'SpacesInAngles': 'false',
+		\ 'SpacesInParentheses': 'false',
+		\ 'TabWidth': 4,
+		\ 'UseTab': 'Always',
+		\ }
+nnoremap <Leader>f :<C-u>ClangFormat<CR>
 

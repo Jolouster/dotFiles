@@ -5,18 +5,64 @@
 		"javascript",
 		"html",
 		"json",
-		"python"
+		"python",
+		"cpp"
 	],
 	// coc-explorer
 	"explorer.width": 30,
 	"explorer.icon.enableNerdfont": true,
 	"explorer.previewAction.onHover": true,
-	"explorer.keyMappings.global": {
-		"<cr>": [
-			"expandable?",
-			"expand",
-			"open"
-		],
-		"v": "open:vsplit"
+	"clangd.semanticHighlighting": true,
+	"clangd.path": "/home/jlopez/.config/coc/extensions/coc-clangd-data/install/11.0.0/clangd_11.0.0/bin/clangd",
+	"languageserver": {
+		"bash": {
+			"command": "bash-language-server",
+			"args": ["start"],
+			"filetypes": ["sh"],
+			"ignoredRootPaths": ["~"]
+		},
+		"ccls": {
+			"command": "ccls",
+			"args": [
+				"--log-file=/tmp/ccls.log",
+				"-v=1"
+			],
+			"filetypes": [
+				"c",
+				"cc",
+				"cpp",
+				"c++",
+				"objc",
+				"objcpp"
+			],
+			"rootPatterns": [
+				".ccls",
+				"compile_commands.json"
+			],
+			"initializationOptions": {
+				"client": {
+					"snippetSupport": true
+				},
+				"index": {
+					"onChange": true
+				},
+				"highlight": {
+					"lsRanges": true
+				}
+			}
+		},
+		"cmake": {
+			"command": "cmake-language-server",
+			"filetypes": ["cmake"],
+			"rootPatterns": [ "build/" ],
+			"initializationOptions": {
+				"buildDirectory": "build"
+			}
+	  	},
+		"sql": {
+			"command": "sql-language-server",
+			"args" : ["up", "--method", "stdio"],
+			"filetypes": ["sql", "mysql"]
+		}
 	}
 }
