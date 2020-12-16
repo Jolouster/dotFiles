@@ -275,7 +275,7 @@ command! -nargs=* NewNote call MakeNewNote(<f-args>)
 " see more information about coc-cmake
 " see more information about coc-phpls
 let g:coc_node_path = '/usr/local/bin/node'
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-phpls', 'coc-cmake', 'coc-clangd', 'coc-marketplace', 'coc-tsserver', 'coc-sql', 'coc-sh', 'coc-css', 'coc-html', 'coc-ccls']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-phpls', 'coc-cmake', 'coc-clangd', 'coc-marketplace', 'coc-tsserver', 'coc-sql', 'coc-sh', 'coc-css', 'coc-html' ]
 let g:coc_disable_startup_warning = 1
 let g:coc_config_home = '~/dotFiles/'
 let g:airline#extensions#coc#enabled = 1

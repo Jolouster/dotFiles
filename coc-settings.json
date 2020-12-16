@@ -21,36 +21,6 @@
 			"filetypes": ["sh"],
 			"ignoredRootPaths": ["~"]
 		},
-		"ccls": {
-			"command": "ccls",
-			"args": [
-				"--log-file=/tmp/ccls.log",
-				"-v=1"
-			],
-			"filetypes": [
-				"c",
-				"cc",
-				"cpp",
-				"c++",
-				"objc",
-				"objcpp"
-			],
-			"rootPatterns": [
-				".ccls",
-				"compile_commands.json"
-			],
-			"initializationOptions": {
-				"client": {
-					"snippetSupport": true
-				},
-				"index": {
-					"onChange": true
-				},
-				"highlight": {
-					"lsRanges": true
-				}
-			}
-		},
 		"cmake": {
 			"command": "cmake-language-server",
 			"filetypes": ["cmake"],
