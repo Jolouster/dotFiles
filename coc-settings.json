@@ -12,6 +12,8 @@
 	"explorer.width": 30,
 	"explorer.icon.enableNerdfont": true,
 	"explorer.previewAction.onHover": true,
+	"clangd.enabled":true,
+	"clangd.checkUpdates": true,
 	"clangd.semanticHighlighting": true,
 	"clangd.path": "/home/jlopez/.config/coc/extensions/coc-clangd-data/install/11.0.0/clangd_11.0.0/bin/clangd",
 	"languageserver": {

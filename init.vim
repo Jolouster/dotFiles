@@ -13,6 +13,8 @@ call plug#begin('~/.local/share/nvim/plugged')
   	Plug 'ryanoasis/vim-devicons' " Add icons to user interface
   	Plug 'tpope/vim-surround' " The plugin provides mappings to easily delete, change and add such surroundings in pairs
   	Plug 'tpope/vim-commentary' " Work with comments
+	" NerdTree
+	Plug 'scrooloose/nerdtree'
   	" Autocomplete based in 'Language Server Protocol (LSP)'
   	Plug 'neoclide/coc.nvim', {'branch': 'release'}
   	" Convert files 
@@ -25,6 +27,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   	Plug 'junegunn/fzf.vim'
 	Plug 'airblade/vim-rooter'
 	" Depuración dentro de vim 
+	Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 	" Plug 'puremourning/vimspector'
 	" Highlight for C/C++
     Plug 'jackguo380/vim-lsp-cxx-highlight'
@@ -376,6 +379,17 @@ nnoremap <c-n> :call OpenTerminal()<CR>
 " ----------------------------------------------------------------------------------------
 
 
+" ----------------------------------------------------------------------------------------
+"  NerdTree
+" ----------------------------------------------------------------------------------------
+nnoremap <silent> <F2> :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['^.git$']
+let NERDTreeStatusline="%{exists('b:NERDTree')?fnamemodify(b:NERDTree.root.path.str(), ':~'):''}"
+
+" ----------------------------------------------------------------------------------------
+"  Depuración con GDB dentro de Neovim
+" ----------------------------------------------------------------------------------------
+let g:loaded_nvimgdb = 1
 
 " ----------------------------------------------------------------------------------------
 "  C/C++ syntax highlight
@@ -389,40 +403,9 @@ let g:syntastic_cpp_cpplint_exec = 'cpplint'
 " The following two lines are optional. Configure it to your liking!
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:clang_format#code_style = 'chromium'
+let g:clang_format#code_style = 'Chromium'
 let g:clang_format#command = '/usr/bin/clang-format-7'
 let g:clang_format#detect_style_format = 1
 let g:clang_format#auto_format_on_insert_leave = 1
-let g:clang_format#style_options = {
-		\ 'BasedOnStyle': 'Chromium',
-		\ 'AlignAfterOpenBracket': 'Align',
-		\ 'AlignEscapedNewlines': 'Left',
-		\ 'AlignOperands': 'true',
-		\ 'AlignTrailingComments': 'true',
-		\ 'AllowAllArgumentsOnNextLine': 'true',
-		\ 'AllowAllParametersOfDeclarationOnNextLine': 'true',
-		\ 'AllowShortBlocksOnASingleLine': 'true',
-		\ 'AllowShortFunctionsOnASingleLine': 'InlineOnly',
-		\ 'AllowShortIfStatementsOnASingleLine': 'WithoutElse',
-		\ 'AllowShortLoopsOnASingleLine': 'false',
-		\ 'AlwaysBreakTemplateDeclarations': 'Yes',
-		\ 'ColumnLimit': 100,
-		\ 'CompactNamespaces': 'false',
-		\ 'IndentWidth': 4,
-		\ 'Language': 'Cpp',
-		\ 'NamespaceIndentation': 'All',
-		\ 'SpaceAfterCStyleCast': 'true',
-		\ 'SpaceAfterLogicalNot': 'false',
-		\ 'SpaceAfterTemplateKeyword': 'true',
-		\ 'SpaceBeforeAssignmentOperators': 'true',
-		\ 'SpaceBeforeParens': 'Always',
-		\ 'SpaceBeforeRangeBasedForLoopColon': 'true',
-		\ 'SpaceInEmptyParentheses': 'false',
-		\ 'SpacesBeforeTrailingComments': 3,
-		\ 'SpacesInAngles': 'false',
-		\ 'SpacesInParentheses': 'false',
-		\ 'TabWidth': 4,
-		\ 'UseTab': 'Always',
-		\ }
 nnoremap <Leader>f :<C-u>ClangFormat<CR>
 
