@@ -154,7 +154,9 @@ newNote() {
 	sed -i -e "s/{Day}/$(date +%d)/g" $fileName
 	sed -i -e "s/{year}/$(date +%Y)/g" $fileName
 
-	nvim $fileName
+	nvim -c "norm G8k" \     # Ve a la linea 8 contando desde el final
+		-c "norm zz" \ 		 # Centra el cursor en la pantalla
+		-c "startinsert" $fileName 		# abre el archivo en el modo insertar para no perder el tiempo
 }
 
 # -- JLU 31/05/2020 crea una nueva entrada en el diario
@@ -169,6 +171,20 @@ newDay() {
 	sed -i -e "s/{myTitle}/$title/g" $fileName
 
 	nvim $fileName
+}
+
+qnote() {
+	quickNoteFileName=$HOME/Dropbox/ExBrain/quickNote-$(date +%Y-%m-%d).md
+	
+	if [ ! -f $quickNoteFileName ]
+	then
+		echo "# Notas para $(date +%Y-%m-%d)" > $quickNoteFileName
+	fi
+
+	nvim -c "norm Go" \
+		-c "norm Go## $(date +%H:%M)" \
+		-c "norm G2o" \
+		-c "startinsert" $quickNoteFileName
 }
 
 # -- JLU 01/06/2020 modo vim

@@ -72,6 +72,7 @@ set foldlevel=1			" All folds with N times a 'shiftwidth' indent or more will be
 set viewoptions=folds,localoptions,unix,slash,cursor
 autocmd BufWritePre *.php mkview 
 autocmd BufWritePost *.php loadview
+autocmd BufReadPost *.log normal G     " go to last line when open a log file.
 
 " ----------------------------------------------------------------------------------------
 " Configuracion del tema de colores
@@ -235,8 +236,8 @@ command! -bang -nargs=* GGrep
 " Go to index of notes and set working directory to my notes
 nnoremap <leader>ni :e $NOTES_DIR/index.md<CR>:cd $NOTES_DIR<CR>
 " Command to search in our notes and only our notes
-command! -nargs=1 Ngrep grep "<args>" -g "*.md" $NOTES_DIR
-nnoremap <leader>ns :Ngrep
+" command! -nargs=1 Ngrep grep "<args>" -g "*.md" $NOTES_DIR
+nnoremap <leader>ns :Rg
 
 " Función para usar FZF en la creación de links dentro de archivos markdown
 function! MakeMarkdownLink(file)
@@ -266,10 +267,28 @@ function! MakeNewNote(...)
 	silent execute '%s/{Month}/'.strftime("%b").'/g'
 	silent execute '%s/{Day}/'.strftime("%d").'/g'
 	silent execute '%s/{year}/'.strftime("%Y").'/g'
-	setf markdown
 endfunction
 
 command! -nargs=* NewNote call MakeNewNote(<f-args>)
+
+" Crear entrada en el diario
+function! MakeNewJournalNote()
+	let pathToJournal = $NOTES_DIR."/diario/"
+	let fileName = strftime("%Y%m%d%H%M")."-diario.md"
+	let journaltTemplate = pathToJournal."diario-plantilla.md"
+	execute 'vsplit' pathToJournal.fileName
+	execute 'read' journaltTemplate
+	let title = "# ".strftime("%d")." ".strftime("%B")." ".strftime("%Y")
+	silent execute '%s/{myTitle}/'.title.'/g'
+endfunction
+
+command! -nargs=0 NewDay call MakeNewJournalNote()
+
+
+" Move selected content to new file
+function! MoveContentToNewFile(...) range
+
+endfunction
 
 " ----------------------------------------------------------------------------------------
 " COC
