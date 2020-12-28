@@ -1,55 +1,55 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+#~/.bashrc : executed by bash(1) for non - login shells.
+#see / usr / share / doc / bash / examples / startup - files(in the package bash - doc)
+#for examples
 
-# If not running interactively, don't do anything
+#If not running interactively, don't do anything
 case $- in
     *i*) ;;
       *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
+#don't put duplicate lines or lines starting with space in the history.
+#See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
+#append to the history file, don't overwrite it
 shopt -s histappend
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+#for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+#check the window size after each command and, if necessary,
+#update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+#If set, the pattern "**" used in a pathname expansion context will
+#match all files and zero or more directories and subdirectories.
+#shopt - s globstar
 
-# make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+#make less more friendly for non - text input files, see lesspipe(1)
+#[- x / usr / bin / lesspipe] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
+#set variable identifying the chroot you work in(used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
+#set a fancy prompt(non - color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+#uncomment for a colored prompt, if the terminal has the capability; turned
+#off by default to not distract the user : the focus in a terminal window
+#should be on the output of commands, not on the prompt
+#force_color_prompt = yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
+#We have color support; assume it's compliant with Ecma-48
+#(ISO / IEC - 6429).(Lack of such support is extremely rare, and such
+#a case would tend to support setf rather than setaf.)
 	color_prompt=yes
     else
 	color_prompt=
@@ -63,7 +63,7 @@ else
 fi
 unset color_prompt force_color_prompt
 
-# If this is an xterm set the title to user@host:dir
+#If this is an xterm set the title to user @host : dir
 case "$TERM" in
 xterm*|rxvt*)
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
@@ -72,38 +72,38 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
+#enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+#alias dir = 'dir --color=auto'
+#alias vdir = 'vdir --color=auto'
 
-    #alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
+#alias grep = 'grep --color=auto'
+#alias fgrep = 'fgrep --color=auto'
+#alias egrep = 'egrep --color=auto'
 fi
 
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+#colored GCC warnings and errors
+#export GCC_COLORS = \'error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
+#some more ls aliases
+#alias ll = 'ls -l'
+#alias la = 'ls -A'
+#alias l = 'ls -CF'
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+#Alias definitions.
+#You may want to put all your additions into a separate file like
+#~/.bash_aliases, instead of adding them here directly.
+#See /usr/share/doc/bash-doc/ examples in the bash - doc package.
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+#enable programmable completion features(you don't need to enable
+#this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+#sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -112,7 +112,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# -- JLU 12/05/2020 para usar powerline en bash
+#-- JLU 12/05/2020 para usar powerline en bash
 export TERM="screen-256color" 
 
 if [ -f `which powerline-daemon` ]; then  
@@ -123,27 +123,27 @@ if [ -f `which powerline-daemon` ]; then
 fi  
 if [ -f /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh ]; then  
 	source /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh  
-fi  
+fi
 
-# -- JLU 12/05/2020 Para usar Tilix
+#-- JLU 12/05/2020 Para usar Tilix
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
         source /etc/profile.d/vte.sh
 fi
 
-# -- JLU 29/05/2020 iniciar QtCreator para compilar para los equipos de Matrix (poky 1.7)
+#-- JLU 29/05/2020 iniciar QtCreator para compilar para los equipos de Matrix(poky 1.7)
 startQt() {
 	bash ${HOME}/Proyectos/Qt/Tools/QtCreator/bin/qtcreator-poky1.7.sh &>> /dev/null &
 }
 
-# -- JLU 31/05/2020 crea nueva nota
+#-- JLU 31/05/2020 crea nueva nota
 newNote() {
 	local rawTitle=$1  ## String del titulo que se pasa entre comillas dobles a la función
 
-	# Constantes
+#Constantes
 	local PATH_TO_NOTES=$HOME/Dropbox/ExBrain/
 	local HEADER_TEMPLATE=$HOME/Dropbox/ExBrain/template-note.md
 	local FILE_EXTENSION='.md'
-	# Variables 
+#Variables 
 	local timeStamp=$(date '+%Y%m%d%H%M')
 	local fileName=$PATH_TO_NOTES$timeStamp"-"${rawTitle// /-}$FILE_EXTENSION
 
@@ -154,12 +154,12 @@ newNote() {
 	sed -i -e "s/{Day}/$(date +%d)/g" $fileName
 	sed -i -e "s/{year}/$(date +%Y)/g" $fileName
 
-	nvim -c "norm G8k" \     # Ve a la linea 8 contando desde el final
-		-c "norm zz" \ 		 # Centra el cursor en la pantalla
+	nvim -c "norm G8k" \
+		-c "norm zz" \
 		-c "startinsert" $fileName 		# abre el archivo en el modo insertar para no perder el tiempo
 }
 
-# -- JLU 31/05/2020 crea una nueva entrada en el diario
+#-- JLU 31 / 05 / 2020 crea una nueva entrada en el diario
 newDay() {
 	local PATH_TO_JOURNAL=$HOME/Dropbox/ExBrain/diario/
 	local JOURNAL_TEMPLATE=$HOME/Dropbox/ExBrain/diario/diario-plantilla.md
@@ -174,26 +174,32 @@ newDay() {
 }
 
 qnote() {
-	quickNoteFileName=$HOME/Dropbox/ExBrain/quickNote-$(date +%Y-%m-%d).md
+	local PATH_TO_NOTES=$HOME/Dropbox/ExBrain/
+	quickNoteFileName=${PATH_TO_NOTES}"quickNote-"$(date +%Y-%m-%d)".md"
 	
 	if [ ! -f $quickNoteFileName ]
 	then
 		echo "# Notas para $(date +%Y-%m-%d)" > $quickNoteFileName
 	fi
 
-	nvim -c "norm Go" \
-		-c "norm Go## $(date +%H:%M)" \
-		-c "norm G2o" \
-		-c "startinsert" $quickNoteFileName
+	if [ ${#} -eq 0 ]
+	then
+		nvim -c "norm Go" \
+			-c "norm Go## $(date +%H:%M)" \
+			-c "norm G2o" \
+			-c "startinsert" $quickNoteFileName
+	else
+		printf "\n## $(date +%H:%M)\n\n%s\n" "${*}" >> $quickNoteFileName
+	fi
 }
 
-# -- JLU 01/06/2020 modo vim
+#-- JLU 01/06/2020 modo vim
 set -o vi
 
-# -- JLU 13/06/2020 ruta a mis notas personales
+#-- JLU 13/06/2020 ruta a mis notas personales
 export NOTES_DIR=$HOME/Dropbox/ExBrain
 
-# -- JLU 29/10/20202 ruta a los scripts personales
+#-- JLU 29/10/2020 ruta a los scripts personales
 PATH=$PATH:$HOME/Scripts
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

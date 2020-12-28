@@ -46,3 +46,53 @@ Verás que está dividido por secciones. Cada una de ellas hace una cosa muy con
 
 En la ultima parte se enlazan los archivos de configuración con las rutas que corresponde.
 
+## Manejo de notas desde la terminal
+
+### Notas siguiendo el método Zettelkasten.
+
+En `myBashrc.sh` se define la variable: `PATH_TO_NOTES` que define dónde guardo mis notas. 
+
+En mi caso se trata de una carpeta dentro de Dropbox. Pero cada uno debería personalizarla.
+
+Para mis notas uso una plantilla que contiene metadatos como fecha de creación, nombre del autor y correo electrónico, titulo, una línea para la frase descriptiva, otra línea para anotar la fuente bibliográfica y otra línea al final para las etiquetas. La variable que determina donde se encuentra esta plantilla es `HEADER_TEMPLATE`
+
+Para crear una nota nueva simplemente tengo que ejecutar el siguiente comando desde cualquier lugar:
+
+```bash
+netNote "Titulo de mi nueva nota"
+```
+
+Con esto se crea una nota con un ID único basado en la fecha y hora actuales del sistema y el titulo indicado. Algo como esto: `202012271330-Titulo-de-mi-nueva-nota.md` en la carpeta especificada en `PATH_TO_NOTES` y se abre automáticamente en el editor Neovim.
+
+### Creación de entradas en el diario personal
+
+En la variable `PATH_TO_JOURNAL` se define dónde guardo las entradas del diario. Cada cual debe personalizarla. También uso una plantilla que me ayuda y guía para escribir. Me cuesta hacer el hábito y para hacer frente a la hoja en blanco me va bien.
+
+Para crear una nueva entrada ejecuto los siguiente desde la línea de comandos:
+
+```bash
+newDay
+```
+
+Con esto me abre el editor Neovim en una nueva entrada de mi diario. El archivo generado se identifica por el ID único basado en fecha y hora seguido del sufijo `-diario.md`.
+
+### Notas rápidas
+
+Esta función crea un archivo por día. Cada vez que se llama a esta función abre el archivo de este día y si no existe aun lo crea. Cada nota rápida se separa del resto por medio de un encabezado de nivel 2 con la hora actual.
+
+Como en los otros casos el editor usado es Neovim.
+
+Hay dos maneras de usarlo:
+
+1. Abrir el editor para escribir lo que uno quiera.
+
+```bash
+qnote
+```
+
+2. Incluir una frase o una oración breve en las nota rápida.
+
+```bash
+qnote Revisar el blog jolouster.com más tarde. Info sobre programación.
+```
+
