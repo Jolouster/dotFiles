@@ -132,7 +132,7 @@ fi
 
 #-- JLU 29/05/2020 iniciar QtCreator para compilar para los equipos de Matrix(poky 1.7)
 startQt() {
-	bash ${HOME}/Proyectos/Qt/Tools/QtCreator/bin/qtcreator-poky1.7.sh &>> /dev/null &
+	bash ${HOME}/Qt/Tools/QtCreator/bin/qtcreator-poky1.7.sh &>> /dev/null &
 }
 
 #-- JLU 31/05/2020 crea nueva nota
@@ -193,13 +193,8 @@ qnote() {
 	fi
 }
 
-#-- JLU 01/06/2020 modo vim
-set -o vi
-
 #-- JLU 13/06/2020 ruta a mis notas personales
 export NOTES_DIR=$HOME/Dropbox/ExBrain
 
-#-- JLU 29/10/2020 ruta a los scripts personales
-PATH=$PATH:$HOME/Scripts
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

@@ -42,3 +42,22 @@ if [ -d "$HOME/Scripts" ]
 then
 	PATH="$HOME/Scripts:$PATH"
 fi
+
+# JLU 01-02-2021
+# set PATH so it include crosstool-ng
+if [ -d "$HOME/crossCompiler/bin/" ]
+then 
+	PATH=$HOME/crossCompiler/bin:$PATH
+fi
+
+if [ -d "$HOME/Proyectos/cross/armv8-rpi3-linux-gnueabihf/bin/" ]
+then
+	PATH=$HOME/Proyectos/cross/armv8-rpi3-linux-gnueabihf/bin:$PATH
+fi
+
+# JLU 08-02-2021 
+if [ -d "$HOME/Proyectos/qt5pi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/" ]
+then
+	PATH=$HOME/Proyectos/qt5pi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin:$PATH
+fi
+

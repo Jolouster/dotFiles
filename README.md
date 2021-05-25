@@ -59,7 +59,7 @@ Para mis notas uso una plantilla que contiene metadatos como fecha de creación,
 Para crear una nota nueva simplemente tengo que ejecutar el siguiente comando desde cualquier lugar:
 
 ```bash
-netNote "Titulo de mi nueva nota"
+newNote "Titulo de mi nueva nota"
 ```
 
 Con esto se crea una nota con un ID único basado en la fecha y hora actuales del sistema y el titulo indicado. Algo como esto: `202012271330-Titulo-de-mi-nueva-nota.md` en la carpeta especificada en `PATH_TO_NOTES` y se abre automáticamente en el editor Neovim.
