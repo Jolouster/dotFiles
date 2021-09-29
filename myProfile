@@ -61,3 +61,13 @@ then
 	PATH=$HOME/Proyectos/qt5pi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin:$PATH
 fi
 
+if [ -f "/usr/local/bin/composer" ]
+then
+	PATH=/usr/local/bin/composer:$PATH
+fi
+
+if [ -d "$HOME/.config/composer/vendor/squizlabs/" ]
+then
+	PATH=$HOME/.config/composer/vendor/squizlabs/php_codesniffer/bin:$PATH
+fi
+

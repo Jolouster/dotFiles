@@ -174,7 +174,13 @@ newDay() {
 }
 
 qnote() {
-	local PATH_TO_NOTES=$HOME/Dropbox/ExBrain/
+	local PATH_TO_NOTES=$HOME/Dropbox/ExBrain/inputs/
+
+	if [ ! -d $PATH_TO_NOTES ]
+	then
+		mkdir -p $PATH_TO_NOTES
+	fi
+
 	quickNoteFileName=${PATH_TO_NOTES}"quickNote-"$(date +%Y-%m-%d)".md"
 	
 	if [ ! -f $quickNoteFileName ]
