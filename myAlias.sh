@@ -5,3 +5,6 @@ alias fvim='nvim -o $(\fzf --height=30% --preview="head -n 20 {}" --preview-wind
 alias minicom='sudo minicom -con' # habilita colores en el serial
 alias ping='ping -c 4 '
 alias ..='cd ..'
+alias PegasoW='cd $HOME/Proyectos/Pegaso/Web/'
+alias PegasoA='cd $HOME/Proyectos/Pegaso/App/'
+alias PegasoS='cd $HOME/Proyectos/Pegaso/scripts/'
